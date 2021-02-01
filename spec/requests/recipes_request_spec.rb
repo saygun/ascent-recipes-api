@@ -25,12 +25,18 @@ RSpec.describe 'Recipes', type: :request do
     it 'renders 20 item of recipes that returned by RecipeService' do
       recipes = FactoryBot.build_list(:recipe, 21)
 
-      stub_request(:get, 'http://www.recipepuppy.com/api?page=&q=foo')
-        .to_return(status: 200, body: JSON.generate({ results: recipes }))
+      stub_request(:get, 'http://www.recipepuppy.com/api?page=1&q=foo')
+        .to_return(
+          status: 200,
+          body: JSON.generate({ results: recipes }),
+          headers: {
+            'Content-Type': 'text/javascript'
+          }
+        )
 
       get '/recipes', params: { q: 'foo' }
-
       body = JSON.parse(response.body)
+
       expect(body['data'].length).to eq(20)
     end
   end
