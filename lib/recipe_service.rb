@@ -4,14 +4,14 @@ class RecipeService
   include HTTParty
   base_uri 'http://www.recipepuppy.com'
 
-  def recipes(query, page = 1)
+  def recipes(query, page = 1, limit = 20)
     options = {
       query: { q: query, page: page }
     }
 
     begin
       res = self.class.get('/api', options)
-      res.success? ? normalize_response(res) : normalize_error(res.code, res.message, res.body)
+      res.success? ? normalize_response(res, limit) : normalize_error(res.code, res.message, res.body)
     rescue HTTParty::Error, SocketError, Timeout::Error => e
       handle_conn_error(e)
     end
@@ -19,10 +19,10 @@ class RecipeService
 
   private
 
-  def normalize_response(res)
+  def normalize_response(res, limit)
     json = JSON.parse(res, symbolize_names: true)
 
-    recipes = json[:results].map do |item|
+    recipes = json[:results][0, limit].map do |item|
       recipe = Recipe.new
       recipe.href = item[:href]
       recipe.title = item[:title]
