@@ -10,7 +10,6 @@ gem 'faraday', '~> 1.3.0'
 gem 'faraday_middleware'
 gem 'faraday-http-cache'
 gem 'jsonapi-serializer', '~> 2.1.0'
-gem 'pg', '~> 1.2.3'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 6.1.1'
 gem 'rubocop', require: false
