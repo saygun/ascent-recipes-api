@@ -1,24 +1,33 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Installation
+--
 
-Things you may want to cover:
+```
+bundle install
+```
+Application is not using database. Therefore no need to call `rails db:setup`
 
-* Ruby version
+## Running
+--
 
-* System dependencies
+```
+rails s
+```
 
-* Configuration
+You can send GET request to the URL `localhost:3000/recipes?q=foo`.
 
-* Database creation
+## Tests
+--
 
-* Database initialization
+```
+rspec
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## TODO
+--
+* Instead of in_memory cache consider using Redis or Memcache.
+* Implement API versioning
+* Write specs that validates responses by using json-schema
+* Add unit test suites for recipe_service.rb
+* Validation happens in recipes_controller could be extracted to external validation class
